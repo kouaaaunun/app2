@@ -1,0 +1,56 @@
+<div class="body">
+      <div class="container">
+
+        <p id="notice">
+          <% if flash[:notice] %>
+          <%= flash[:notice] %>
+          <% end %>
+
+        </p>
+
+
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<h1>Editing Book</h1>
+  <!-- <div class='col-md-3 col-md-offset-3'>
+  </div> -->
+<% if @book.errors.any? %>
+        <div id="error_explanation">
+        <h3><%= @book.errors.count %> error prohibited this obj from being saved:</h3>
+
+        <ul>
+          <% @book.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+        <% end %>
+        </ul>
+        </div>
+<% end %>
+
+<%= form_for(@book) do |f| %>
+
+  <div class="field row">
+    <div class="field_with_errors"><label for="book_title">Title</label></div>
+    <div class="field_with_errors">
+    <%= f.text_field :title, autofocus: true, class:"col-xs-12 book_title", id:"book_title", placeholder:"タイトル"%>
+    </div>
+  </div>
+
+  <div class="field row">
+    <label for="book_opinion">Opinion</label>
+    <%= f.text_area :body, autofocus: true, class:"col-xs-12 book_body", id:"book_body", placeholder:"内容"%>
+
+  </div>
+
+  <div class="actions row">
+    <%= f.submit "Update Book", class:"btn btn-primary col-xs-12" %>
+  </div>
+<% end %>
+
+		<a class="book"><%= link_to 'Show', book_path %>
+</a> |
+		<a class="back" href="/books">Back</a>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+      </div>
+    </div>

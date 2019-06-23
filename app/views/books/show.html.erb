@@ -1,0 +1,87 @@
+<div class="body">
+      <div class="container">
+
+        <p id="notice">
+          <% if flash[:notice] %>
+          <%= flash[:notice] %>
+          <% end %>
+        </p>
+
+
+        <div class="row">
+  <div class="col-xs-3">
+    <h2>User info</h2>
+    <%= attachment_image_tag @book.user, :profile_image, :fill, 100, 100, format: 'jpeg', class: "attachment user profile_image fallback", fallback: "no_image.jpg" %><table class="table">
+      <tbody><tr></tr>
+      <tr>
+        <th>name</th>
+        <th><%= @book.user.name %></th>
+      </tr>
+      <tr>
+        <th>introduction</th>
+        <th><%= @book.user.introduction %></th>
+      </tr>
+</tbody></table>
+
+<div class="row">
+  <% if @book.user.id == current_user.id %>
+    <%= link_to edit_user_path(@user) do %><p class="col-xs-12 btn btn-default glyphicon glyphicon-wrench"></p>
+    <% end %>
+  <% else %>
+    <%= link_to user_path(current_user) do %><p class="col-xs-12 btn btn-default glyphicon glyphicon-wrench"></p>
+    <% end %>
+  <% end %>
+</div>
+
+    <h2>New book</h2>
+        <%= form_for(@nbook) do |f| %>
+  <div class="field row">
+    <label for="book_title">Title</label>
+      <%= f.text_field :title, class:"col-xs-12 book_title", placeholder:"タイトル" %>
+  </div>
+
+  <div class="field row">
+    <label for="book_opinion">Opinion</label>
+      <%= f.text_area :body, class:"col-xs-12 book_body", rows:"3", placeholder:"コメントここに" %>
+  </div>
+
+  <div class="actions row">
+      <%= f.submit "Create Book", class:"btn btn-primary col-xs-12" %>
+  </div>
+  <% end %>
+  </div>
+
+
+  <div class="col-xs-9">
+    <h2>Book detail</h2>
+    <table class="table">
+      <tbody>
+        <tr>
+        <td>
+          <%= attachment_image_tag @book.user, :profile_image, fallback:"no_image.jpg", size: "50x50", class: "attachment user profile_image fallback" %>
+          <br>
+          <%= link_to user_path(@book.user.id) do %>
+          <%= @book.user.name %><% end %>
+        </td>
+        <td>
+          <%= link_to book_path(@book.id) do %>
+          <%= @book.title %><% end %>
+        </td>
+        <td><%= @book.body %></td>
+
+        <% if @book.user == current_user %>
+          <td><%= link_to "Edit", edit_book_path(@book), class:"btn-sm btn-success edit_book" %></td>
+          <td><%= link_to "Destroy", book_path(@book), method: :delete, class:"btn-sm btn-danger destroy_book", "data-confirm" => "本当に消しますか？" %></td>
+
+
+                <% end %>
+
+
+
+      </tr>
+    </tbody></table>
+
+  </div>
+</div>
+      </div>
+    </div>
